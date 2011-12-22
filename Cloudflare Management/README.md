@@ -1,12 +1,9 @@
 A Cloudflare Management plugin. This proved extremely useful while developing and theming MyBB, and as a general gauge of bandwidth afterwards.
+Features can/will be added at request
 
 Simply upload Cloudflare.php to your plugins folder. Then open Cloudflare.php and adjust the $Cloudflare settings.
-
 API Key can be found here: https://www.cloudflare.com/my-account
-
-Zone number can be found here: https://www.cloudflare.com/api_json.html?a=get_zone&zones=<domain.here>&u=<email@address.here>&tkn=<api_key>
-
-Features can/will be added at request
+Zone number can be found here: https://www.cloudflare.com/api_json.html?a=get_zone&zones=[domain.here]&u=[email@address.here]&tkn=[api_key_here]
 
 
 Copyright (C) 2011 Alex "Antoligy" Wilson <antoligy@antoligy.com>
