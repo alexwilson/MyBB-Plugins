@@ -406,4 +406,3 @@ if($mybb->input['module'] == 'tools-Cloudflare') {
 	}
 }
 ?>
-c
