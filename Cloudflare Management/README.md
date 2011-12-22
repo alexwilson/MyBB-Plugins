@@ -1,3 +1,4 @@
+<pre>
 A Cloudflare Management plugin. This proved extremely useful while developing and theming MyBB, and as a general gauge of bandwidth afterwards.
 Simply upload Cloudflare.php to your plugins folder. Then open Cloudflare.php and adjust the $Cloudflare settings.
 API Key can be found here: https://www.cloudflare.com/my-account
@@ -23,3 +24,4 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+</pre>
