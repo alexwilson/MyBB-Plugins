@@ -74,7 +74,7 @@ function Cloudflare_info() {
 		"author" => "Alex \"Antoligy\" Wilson",
 		"authorsite" => "http://antoligy.com/",
 		"version" => "1.0",
-		"guid" => "",
+		"guid" => "18bafdcd24f80ba02aa2cd69fcd4f296",
 		"combatibility" => "*"
 	);
 }
