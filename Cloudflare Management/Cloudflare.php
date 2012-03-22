@@ -187,7 +187,19 @@ function Cloudflare_Form() {
 					'tkn' => &$Cloudflare['API_Key'],
 					'v' => $_GET['devmode'],
       			);
-      		Cloudflare_POST($Cloudflare['data']);
+			Cloudflare_POST($Cloudflare['data']);
+			}
+		break;
+
+		case 'greylist':
+			if(isset($_GET['ip'])) {
+				$Cloudflare['data'] = array(
+					'a' => $_GET['type'],
+					'u' => $Cloudflare['Email'],
+					'tkn' => $Cloudflare['API_Key'],
+					'key' => long2ip(ip2long($_GET['ip'])),
+				);
+				Cloudflare_POST($Cloudflare['data']);
 			}
 		break;
 
@@ -199,9 +211,20 @@ function Cloudflare_Form() {
 					'u' => $Cloudflare['Email'],
 					'tkn' => $Cloudflare['API_Key'],
 					'v' => $_GET['lvl'],
-      			);
-      		Cloudflare_POST($Cloudflare['data']);
+			);
+			Cloudflare_POST($Cloudflare['data']);
 			}
+		break;
+
+		case 'ipv46':
+			$Cloudflare['data'] = array(
+				'a' => 'ipv46',
+				'z' => $Cloudflare['Domain'],
+				'u' => $Cloudflare['Email'],
+				'tkn' => $Cloudflare['API_Key'],
+				'v' => $_GET['ipv46'],
+			);
+			Cloudflare_POST($Cloudflare['data']);
 		break;
 
 		case 'cache':
@@ -215,8 +238,8 @@ function Cloudflare_Form() {
 										'u' => $Cloudflare['Email'],
 										'tkn' => $Cloudflare['API_Key'],
 										'v' => $_GET['lvl'],
-	      		);
-         		Cloudflare_POST($Cloudflare['data']);
+						);
+						Cloudflare_POST($Cloudflare['data']);
 					break;
 
 					case 'cache':
@@ -226,8 +249,8 @@ function Cloudflare_Form() {
 										'u' => $Cloudflare['Email'],
 										'tkn' => $Cloudflare['API_Key'],
 										'v' => 1,
-	      		);
-         		Cloudflare_POST($Cloudflare['data']);
+						);
+						Cloudflare_POST($Cloudflare['data']);
 					break;
 
 					case 'snapshot':
@@ -236,8 +259,8 @@ function Cloudflare_Form() {
 										'zid' => $Cloudflare['Zone'],
 										'u' => $Cloudflare['Email'],
 										'tkn' => $Cloudflare['API_Key'],
-	      		);
-         		Cloudflare_POST($Cloudflare['data']);
+						);
+						Cloudflare_POST($Cloudflare['data']);
 					break;
 					
 /*					case 'resetzone':
@@ -290,7 +313,12 @@ function Cloudflare_Main() {
 		$output['core']->construct_row();
 		$output['core']->construct_cell('<b>Reset Zone ID:</b>');
 		$output['core']->construct_cell('<form method="get"><input type="hidden" name="module" value="tools-Cloudflare"><input type="hidden" name="cfaction" value="resetzone"></select>&nbsp;<input type="submit" value="Apply" /></form>');
+
 		$output['core']->construct_row();
+		$output['core']->construct_cell('<b>Automatic IPv6 Gateway:</b>');
+		$output['core']->construct_cell('<form method="get"><input type="hidden" name="module" value="tools-Cloudflare"><input type="hidden" name="cfaction" value="ipv46"></select><select name="ipv46"><option value="1" selected="selected">Enable</option><option value="0">Disable</option>&nbsp;<input type="submit" value="Apply" /></form>');
+		$output['core']->construct_row();
+
 		$output['core']->output('<b><u>Core Settings</b></u>');
 */
 		
@@ -360,6 +388,10 @@ function Cloudflare_Main() {
 
 		$output['secure']->construct_cell('<b>Set Level:</b>');
 		$output['secure']->construct_cell('<form method="get"><input type="hidden" name="module" value="tools-Cloudflare"><input type="hidden" name="cfaction" value="secure"><select name="lvl"><option value="high">High</option><option value="med" selected="selected">Medium</option><option value="low">Low</option><option value="eoff">Essentially Off</option></select>&nbsp;<input type="submit" value="Apply" /></form>');
+		$output['secure']->construct_row();
+
+		$output['secure']->construct_cell('<b>Whitelist/Blacklist IP:</b>');
+		$output['secure']->construct_cell('<form method="get"><input type="hidden" name="module" value="tools-Cloudflare"><input type="hidden" name="cfaction" value="greylist"><input type="text" maxlength="15" name="ip">&nbsp;<select name="type"><option value="ban">Blacklist</option><option value="wl" selected="selected">Whitelist</option>&nbsp;<input type="submit" value="Apply" /></form>');
 		$output['secure']->construct_row();
 
 		$output['secure']->output('<b><u>Security Settings</b></u>');
