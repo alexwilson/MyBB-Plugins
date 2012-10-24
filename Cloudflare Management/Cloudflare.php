@@ -2,7 +2,7 @@
 /*
 Antoligy MyBB Cloudflare Management Plugin v1.2
 
-Copyright (c) 2011, Alex "Antoligy" Wilson <antoligy@antoligy.com>
+Copyright (c) 2011-2012, Alex "Antoligy" Wilson <antoligy@antoligy.com>
 
 Permission to use, copy, modify, and/or distribute this software for any
 purpose without fee is hereby granted, provided that the above copyright
@@ -488,13 +488,13 @@ if($mybb->input['module'] == 'tools-Cloudflare') {
 		$c = array();
 		$c['c'] = curl_init();
 		curl_setopt(&$c['c'], CURLOPT_VERBOSE, 0);
-    curl_setopt(&$c['c'], CURLOPT_FORBID_REUSE, true);
-    curl_setopt(&$c['c'], CURLOPT_URL, &$Cloudflare['API']);
-    curl_setopt(&$c['c'], CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt(&$c['c'], CURLOPT_POST, 1);
-    curl_setopt(&$c['c'], CURLOPT_POSTFIELDS, $Cloudflare['Query']);
-    curl_setopt(&$c['c'], CURLOPT_TIMEOUT, &$Cloudflare['Timeout']);
-  	$c['crs'] = curl_exec(&$c['c']);
+		curl_setopt(&$c['c'], CURLOPT_FORBID_REUSE, true);
+		curl_setopt(&$c['c'], CURLOPT_URL, &$Cloudflare['API']);
+		curl_setopt(&$c['c'], CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt(&$c['c'], CURLOPT_POST, 1);
+		curl_setopt(&$c['c'], CURLOPT_POSTFIELDS, $Cloudflare['Query']);
+		curl_setopt(&$c['c'], CURLOPT_TIMEOUT, &$Cloudflare['Timeout']);
+		$c['crs'] = curl_exec(&$c['c']);
 		$c['cer'] = curl_error(&$c['c']);
 		$c['cht'] = curl_getinfo(&$c['c'], CURLINFO_HTTP_CODE);
 		curl_close($c['c']);
@@ -512,7 +512,10 @@ if($mybb->input['module'] == 'tools-Cloudflare') {
 		}
 	}
 	if(!is_super_admin($mybb->user['uid'])) {
-		flash_message($lang->cannot_perform_action_super_admin_general, 'error');
+		if(!function_exists(flash_message)) {
+			require_once('../../functions.php');
+		}
+		@flash_message($lang->cannot_perform_action_super_admin_general, 'error');
 	} else {
 		if(!$mybb->input['action']) {
 			$page->add_breadcrumb_item('Cloudflare Management', 'index.php?module=tools-Cloudflare');
