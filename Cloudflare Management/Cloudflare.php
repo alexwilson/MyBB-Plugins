@@ -1,20 +1,20 @@
 <?php
 /*
-Antoligy MyBB Cloudflare Management Plugin v1.2
+	Antoligy MyBB Cloudflare Management Plugin v1.2
 
-Copyright (c) 2011-2012, Alex "Antoligy" Wilson <antoligy@antoligy.com>
+	Copyright (c) 2011-2012, Alex "Antoligy" Wilson <antoligy@antoligy.com>
 
-Permission to use, copy, modify, and/or distribute this software for any
-purpose without fee is hereby granted, provided that the above copyright
-notice and this permission notice appear in all copies.
+	Permission to use, copy, modify, and/or distribute this software for any
+	purpose without fee is hereby granted, provided that the above copyright
+	notice and this permission notice appear in all copies.
 
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+	THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+	WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+	MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+	ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+	WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+	ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+	OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 */
 
 // Mandidatory Security Check
@@ -67,35 +67,41 @@ function Cloudflare_install() {
 	$db->query('DELETE FROM ' . TABLE_PREFIX . "settinggroups WHERE name='Cloudflare'");
 	$db->query('DELETE FROM ' . TABLE_PREFIX . "settings WHERE name LIKE 'Cloudflare_%'");
 	$db->query('UPDATE  ' . TABLE_PREFIX . "settings set value='1' WHERE name='ip_forwarded_check'");
-	$db->insert_query('settinggroups', array('gid' => 'NULL',
-																					 'name' => 'Cloudflare',
-																					 'title' => 'Cloudflare Management',
-																					 'description' => 'Configure your Cloudflare settings.',
-																					 'disporder' => 1,
-																					 'isdefault' => 0,
-																					 )
+	$db->insert_query('settinggroups', array(	
+												'gid' => 'NULL',
+												'name' => 'Cloudflare',
+												'title' => 'Cloudflare Management',
+												'description' => 'Configure your Cloudflare settings.',
+												'disporder' => 1,
+												'isdefault' => 0,
+											)
 									 );
   $gid = intval($db->insert_id());
-	$settings = array('Cloudflare_Domain' => array(
-																								'title' => 'Domain',
-																								'description' => 'Domain of Cloudflare managed website (probably this one).',
-																								'optionscode' => 'text',
-																								'value' => $mybb->settings['cookiedomain'],
-																								'disporder' => 1,
-																								),
-									 'Cloudflare_Email' => array('title' => 'Email',
-																								'description' => 'The email address you use with your Cloudflare account.',
-																								'optionscode' => 'text',
-																								'value' => $mybb->user['email'],
-																								'disporder' => 2,
-																								),
-									 'Cloudflare_API_Key' => array('title' => 'API Key',
-									 															'description' => 'Your CloudFlare API key (<a href="https://www.cloudflare.com/my-account">Click here to find your API key</a>).',
-									 															'optionscode' => 'text',
-									 															'value' => '63example612a5545144347863bb09192919example57',
-									 															'disporder' => 3,
-									 															),
-								 );
+	$settings = array(	
+						'Cloudflare_Domain' => array(
+													'title' => 'Domain',
+													'description' => 'Domain of Cloudflare managed website (probably this one).',
+													'optionscode' => 'text',
+													'value' => $mybb->settings['cookiedomain'],
+													'disporder' => 1,
+													),
+
+						'Cloudflare_Email' => array(
+													'title' => 'Email',
+													'description' => 'The email address you use with your Cloudflare account.',
+													'optionscode' => 'text',
+													'value' => $mybb->user['email'],
+													'disporder' => 2,
+													),
+
+						'Cloudflare_API_Key' => array(
+														'title' => 'API Key',
+														'description' => 'Your CloudFlare API key (<a href="https://www.cloudflare.com/my-account">Click here to find your API key</a>).',
+									 					'optionscode' => 'text',
+									 					'value' => '63example612a5545144347863bb09192919example57',
+									 					'disporder' => 3,
+													),
+					);
 	foreach($settings as $name => $setting) {
 		$setting['gid'] = $gid;
 		$setting['name'] = $name;
